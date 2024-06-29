@@ -8,6 +8,7 @@ import { ThemeProvider } from "@react-navigation/native";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+
   const [theme, setTheme] = useState(DarkTheme);
 
   return (
