@@ -1,23 +1,63 @@
+import { auth } from "../../../Firebase";
 import { DarkTheme, LightTheme, GlassTheme } from "@/themes";
+import { getAuth, signOut } from "firebase/auth";
 import { ThemeProvider } from "@react-navigation/native";
+import { router } from "expo-router";
 import { useState } from "react";
 import {
     SafeAreaView,
-    ActivityIndicator,
     StyleSheet,
-    Text, TouchableOpacity, View, useColorScheme
+    Text, 
+    TouchableOpacity, 
+    View,
+    Image
 } from "react-native";
 
 const Home = () => {
-    // const themeState = () => {
-    //     const [theme, setTheme] = useState(LightTheme)
-    // }
-    return (
-        <SafeAreaView>
-            <Text style={darkStyles.text}>HomeScreen</Text>
-            <ActivityIndicator size='large' color={DarkTheme.colors.primary} />
+    const [theme, setTheme] = useState(DarkTheme);
+    const [isError, setIsError] = useState(false);
+    const [isLoading, ssetIsLoading] = useState(false);
 
+    const handleSignOut = () => {
+        const auth = getAuth();
+        signOut(auth).then(() => {
+            router.replace('/login')
+        }).catch((error) => {
+            // An error happened.
+        });
+    }
+const avatarVisible = () =>  {
+            if (!auth.currentUser?.photoURL) {
+                return (
+                    <View style={{borderRadius: 100, width: 30, height: 30}}>
+                        <Image source={{uri: 'https://i.pravatar.cc/300'}} style={{width: 30, height: 30, borderRadius: 100}} />
+                    </View>
+                )
+            }else{
+                return (
+                    <View style={{borderRadius: 100, width: 30, height: 30}}>
+                        <Image source={{uri: auth.currentUser?.photoURL}} style={{width: 30, height: 30, borderRadius: 100}} />
+                    </View>
+                )
+            }
+}
 
+return (
+        <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20,
+        backgroundColor: DarkTheme.colors.background
+    }}
+            <View>
+                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', width: 100, gap: 20, alignItems: 'center'}}>
+                    <TouchableOpacity>
+                        <View>
+                            {avatarVisible()}
+                        </View>
+                    </TouchableOpacity>
+                    <View>
+                        <Text style={{color: DarkTheme.colors.text, fontSize: 20, marginVertical: 10}}>Hi, Joshua{/*auth.currentUser?.displayName*/}</Text>
+                    </View>
+                </View>
+            </View>
         </SafeAreaView>
     )
 }
