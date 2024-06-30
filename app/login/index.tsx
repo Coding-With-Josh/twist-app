@@ -1,3 +1,4 @@
+import { auth } from "@/Firebase";
 import { DarkTheme, GlassTheme, LightTheme } from "@/themes";
 import { ThemeProvider } from "@react-navigation/native";
 import { Link } from "expo-router";
@@ -17,6 +18,10 @@ const LoginScreen = () => {
   const [theme, setTheme] = useState(LightTheme);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSignIn = () => {
+    auth.sign;
+  };
 
   return (
     <ThemeProvider value={theme}>
@@ -57,9 +62,10 @@ const LoginScreen = () => {
                 <TextInput
                   style={darkStyles.inputControl}
                   placeholder="********"
+                  secureTextEntry
                   placeholderTextColor="#746b80"
-                  // value={form.password}
-                  // onChangeText={email => setForm({ ...form, password})}
+                  value={password}
+                  onChangeText={(text) => setPassword(text)}
                 />
               </View>
 
@@ -106,8 +112,8 @@ const LoginScreen = () => {
                   style={lightStyles.inputControl}
                   placeholder="john@example.com"
                   placeholderTextColor="#746b80"
-                  value={form.email}
-                  onChangeText={(email) => setForm({ ...form, email })}
+                  value={email}
+                  onChangeText={(text) => setEmail(text)}
                 />
               </View>
 
