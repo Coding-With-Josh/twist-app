@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { auth } from "@/Firebase";
-=======
-import { auth } from "../../Firebase";
->>>>>>> ee63fd7cb1c2f3aa70fb2c76cb918245a3ab5026
 import { DarkTheme, GlassTheme, LightTheme } from "@/themes";
 import { ThemeProvider, useNavigation } from "@react-navigation/native";
 import { Link, router } from "expo-router";
@@ -32,7 +28,7 @@ const LoginScreen = () => {
   };
 
   const Error = () => {
-    Alert.alert("Error");
+    alert("Error");
   };
 
   useEffect(() => {
@@ -56,10 +52,6 @@ const LoginScreen = () => {
       .catch((error) => {
         <Error />;
       });
-  };
-
-  const handleSignIn = () => {
-    auth.sign;
   };
 
   return (
