@@ -1,22 +1,28 @@
 import { Tabs } from "expo-router";
 import React, { useState } from "react";
-
-import { TabBarIcon } from "@/components/navigation/TabBarIcon";
-import { useColorScheme } from "@/hooks/useColorScheme";
-import { DarkTheme, LightTheme, GlassTheme } from "../../themes";
+import { DarkTheme, LightTheme, GlassTheme } from "@/themes";
 import { ThemeProvider } from "@react-navigation/native";
+import TabBar from "@/components/TabBar";
 
 export default function TabLayout() {
   const [theme, setTheme] = useState(DarkTheme);
 
   return (
     <ThemeProvider value={theme}>
-      <Tabs>
+      <Tabs 
+        screenOptions={{
+          tabBarStyle: {display: "none"},
+        }}
+        tabBar={props=> <TabBar {...props} />}
+        >
         <Tabs.Screen
           name="home"
           options={{
             headerShown: false,
             title: "Home",
+
+             display: "none", 
+            
             }}  
         />
 

@@ -10,11 +10,11 @@ import {
     SafeAreaView,
     StyleSheet,
     Text, 
+    TextInput,
     TouchableOpacity, 
     View,
     Image
 } from "react-native";
-import Greeting from "@/components/Greetin";
 
 const Home = () => {
     const [theme, setTheme] = useState(DarkTheme);
@@ -24,6 +24,7 @@ const Home = () => {
     const handleSignOut = () => {
         const auth = getAuth();
         signOut(auth).then(() => {
+            ssetIsLoading(true)
             router.replace('/login')
         }).catch((error) => {
             // An error happened.
@@ -32,7 +33,7 @@ const Home = () => {
 const avatarVisible = () =>  {
             if (!auth.currentUser?.photoURL) {
                 return (
-                    <View style={{borderRadius: 100, width: 30, height: 30}}>
+                    <View style={{borderRadius: 100, width: 45, height: 45}}>
                         <Image source={{uri: 'https://i.pravatar.cc/300'}} style={{width: 30, height: 30, borderRadius: 100}} />
                     </View>
                 )
@@ -91,6 +92,19 @@ return (
             {/* Greeting */}
                     <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                         {greeting()} {isNameDefined()}
+                    </View>
+            {/*Avatar and Search*/}
+                    <View style={{flex: 1, flexDirection: 'row', marginVertical: 15, alignItems: 'center'}}>
+                        <View style={{marginRight: 20, borderWidth: 1, borderColor: DarkTheme.colors.border, borderRadius: 100}}>{avatarVisible()}</View>
+                        <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 10, padding: 10}}>
+                            <TextInput 
+                                placeholder="Search..." 
+                                style={{padding: 10, backgroundColor: DarkTheme.colors.card, fontSize: 15, color: DarkTheme.colors.text, borderRadius: 10, flex: 1, marginLeft: 10}} 
+                            />
+                            <TouchableOpacity style={{marginLeft: 10, width: 80, height: 80, flex: 1,alignItems: 'center', justifyContent: 'center', backgroundColor: DarkTheme.colors.primary, borderRadius: 10, padding: 10}}>
+                                <Ionicons name="search" size={24} color={DarkTheme.colors.text} />
+                            </TouchableOpacity>
+                        </View>
                     </View>
             </View>
         </SafeAreaView>
