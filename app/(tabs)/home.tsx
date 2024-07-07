@@ -1,9 +1,11 @@
 import { auth } from "@/Firebase";
-import { DarkTheme, LightTheme, GlassTheme } from "@/themes";
+import { DarkTheme, LightTheme, GlassTheme, DefaultTheme } from "@/themes";
 import { getAuth, signOut } from "firebase/auth";
-import { ThemeProvider } from "@react-navigation/native";
+import { ThemeProvider } from "../../context/ThemeProvider";
 import { router } from "expo-router";
 import { useState } from "react";
+import { useContext } from "react";
+import { ThemeContext } from "../../context/ThemeContext"
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Feather from '@expo/vector-icons/Feather';
 import {
@@ -17,7 +19,7 @@ import {
 } from "react-native";
 
 const Home = () => {
-    const [theme, setTheme] = useState(DarkTheme);
+    const {theme} = useContext(ThemeContext);
     const [isError, setIsError] = useState(false);
     const [isLoading, ssetIsLoading] = useState(false);
 
@@ -77,16 +79,15 @@ const greeting = () => {
   };
 
 return (
-        <SafeAreaView style={{flex: 1, padding: 20, backgroundColor: DarkTheme.colors.background
-    }}>
+        <SafeAreaView style={{flex: 1, padding: 20, backgroundColor: theme === DarkTheme ? DarkTheme.colors.background : theme === LightTheme ? LightTheme.colors.background : GlassTheme ? GlassTheme.colors.background : DefaultTheme.colors.background,}}>
             <View>
             {/* Header */}
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20}}>
                     <TouchableOpacity>
-                        <Feather name="menu" size={24} color={DarkTheme.colors.text} />
+                        <Feather name="menu" size={24} color={theme === DarkTheme ? DarkTheme.colors.text : LightTheme ? LightTheme.colors.text : GlassTheme ? GlassTheme.colors.text : DefaultTheme.colors.text} />
                     </TouchableOpacity>
                     <TouchableOpacity>
-                        <Ionicons name="notifications" size={24} color={DarkTheme.colors.text} />
+                        <Ionicons name="notifications" size={24} color={theme === DarkTheme ? DarkTheme.colors.text : LightTheme ? LightTheme.colors.text : GlassTheme ? GlassTheme.colors.text : DefaultTheme.colors.text} />
                     </TouchableOpacity>
                 </View>
             {/* Greeting */}
@@ -94,14 +95,14 @@ return (
                         {greeting()} {isNameDefined()}
                     </View>
             {/*Avatar and Search*/}
-                    <View style={{flex: 1, flexDirection: 'row', marginVertical: 15, alignItems: 'center'}}>
-                        <View style={{marginRight: 20, borderWidth: 1, borderColor: DarkTheme.colors.border, borderRadius: 100}}>{avatarVisible()}</View>
+                    <View style={{flex: 1, flexDirection: 'row', marginVertical: 15, justifyContent: 'space-between', width: '60%', alignItems: 'center'}}>
+                        <View style={{marginRight: 20, borderWidth: 1, borderColor: theme === DarkTheme ? DarkTheme.colors.border : LightTheme ? LightTheme.colors.border : GlassTheme ? GlassTheme.colors.border : DefaultTheme.colors.border, borderRadius: 100}}>{avatarVisible()}</View>
                         <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 10, padding: 10}}>
                             <TextInput 
                                 placeholder="Search..." 
-                                style={{padding: 10, backgroundColor: DarkTheme.colors.card, fontSize: 15, color: DarkTheme.colors.text, borderRadius: 10, flex: 1, marginLeft: 10}} 
+                                style={{padding: 10, backgroundColor: theme === DarkTheme ? DarkTheme.colors.card : LightTheme ? LightTheme.colors.card : GlassTheme ? GlassTheme.colors.card : DefaultTheme.colors.card, fontSize: 15, color: theme === DarkTheme ? DarkTheme.colors.text : LightTheme ? LightTheme.colors.text : GlassTheme ? GlassTheme.colors.text : DefaultTheme.colors.text, borderRadius: 10, flex: 1, marginLeft: 10}} 
                             />
-                            <TouchableOpacity style={{marginLeft: 10, width: 80, height: 80, flex: 1,alignItems: 'center', justifyContent: 'center', backgroundColor: DarkTheme.colors.primary, borderRadius: 10, padding: 10}}>
+                            <TouchableOpacity style={{marginLeft: 10, width: 80, height: 80, alignItems: 'center', backgroundColor: theme === DarkTheme ? DarkTheme.colors.primary : LightTheme ? LightTheme.colors.primary : GlassTheme ? GlassTheme.colors.primary : DefaultTheme.colors.primary, borderRadius: 10, padding: 10}}>
                                 <Ionicons name="search" size={24} color={DarkTheme.colors.text} />
                             </TouchableOpacity>
                         </View>
@@ -111,31 +112,10 @@ return (
     )
 }
 
-const darkStyles = StyleSheet.create({
-    text: {
-        color: DarkTheme.colors.text,
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginVertical: 10,
-    }
-})
+const darkStyles = StyleSheet.create({})
 
-const lightStyles = StyleSheet.create({
-    text: {
-        color: LightTheme.colors.text,
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginVertical: 10,
-    }
-})
+const lightStyles = StyleSheet.create({})
 
-const glassStyles = StyleSheet.create({
-    text: {
-        color: GlassTheme.colors.text,
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginVertical: 10,
-    }
-})
+const glassStyles = StyleSheet.create({})
 
 export default Home

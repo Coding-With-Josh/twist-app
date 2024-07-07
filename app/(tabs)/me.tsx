@@ -10,13 +10,12 @@ import {
   Image,
 } from 'react-native';
 import FeatherIcon from '@expo/vector-icons/Feather';
+import logout from "../../context/logout";
 import { DarkTheme } from '@/themes';
 
 const Settings = () => {
-  const [form, setForm] = useState({
-    emailNotifications: true,
-    pushNotifications: false,
-  });
+  const [emailNotifications, setEmailNotification] = useState(true);
+  const [pushNotifications, setPushNotifications] = useState(false)
 
   return (
     <SafeAreaView style={{ flex: 1, paddingTop: 25, backgroundColor: DarkTheme.colors.background }}>
@@ -28,7 +27,7 @@ const Settings = () => {
                 // handle onPress
               }}>
               <FeatherIcon
-                color={DarkTheme.colors.border
+                color={DarkTheme.colors.text}
                 name="chevron-left"
                 size={27} />
             </TouchableOpacity>
@@ -75,7 +74,7 @@ const Settings = () => {
                 </View>
 
                 <FeatherIcon
-                  color={DarkTheme.colors.border}
+                  color={DarkTheme.colors.text}
                   name="chevron-right"
                   size={22} />
               </TouchableOpacity>
@@ -99,7 +98,7 @@ const Settings = () => {
                   <Text style={styles.rowValue}>English</Text>
 
                   <FeatherIcon
-                    color="#bcbcbc"
+                    color={DarkTheme.colors.text}
                     name="chevron-right"
                     size={19} />
                 </TouchableOpacity>
@@ -118,7 +117,7 @@ const Settings = () => {
                   <Text style={styles.rowValue}>Los Angeles, CA</Text>
 
                   <FeatherIcon
-                    color="#bcbcbc"
+                    color={DarkTheme.colors.text}
                     name="chevron-right"
                     size={19} />
                 </TouchableOpacity>
@@ -132,10 +131,10 @@ const Settings = () => {
 
                   <Switch
                     onValueChange={emailNotifications =>
-                      setForm({ ...form, emailNotifications })
+                      setEmailNotification(emailNotifications)
                     }
                     style={{ transform: [{ scaleX: 0.95 }, { scaleY: 0.95 }] }}
-                    value={form.emailNotifications} />
+                    value={emailNotifications} />
                 </View>
               </View>
 
@@ -147,10 +146,10 @@ const Settings = () => {
 
                   <Switch
                     onValueChange={pushNotifications =>
-                      setForm({ ...form, pushNotifications })
+                      setPushNotifications(pushNotifications)
                     }
                     style={{ transform: [{ scaleX: 0.95 }, { scaleY: 0.95 }] }}
-                    value={form.pushNotifications} />
+                    value={pushNotifications} />
                 </View>
               </View>
             </View>
@@ -171,7 +170,7 @@ const Settings = () => {
                   <View style={styles.rowSpacer} />
 
                   <FeatherIcon
-                    color="#bcbcbc"
+                    color={DarkTheme.colors.text}
                     name="chevron-right"
                     size={19} />
                 </TouchableOpacity>
@@ -188,7 +187,7 @@ const Settings = () => {
                   <View style={styles.rowSpacer} />
 
                   <FeatherIcon
-                    color="#bcbcbc"
+                    color={DarkTheme.colors.text}
                     name="chevron-right"
                     size={19} />
                 </TouchableOpacity>
@@ -205,7 +204,7 @@ const Settings = () => {
                   <View style={styles.rowSpacer} />
 
                   <FeatherIcon
-                    color="#bcbcbc"
+                    color={DarkTheme.colors.text}
                     name="chevron-right"
                     size={19} />
                 </TouchableOpacity>
@@ -222,7 +221,7 @@ const Settings = () => {
                   <View style={styles.rowSpacer} />
 
                   <FeatherIcon
-                    color="#bcbcbc"
+                    color={DarkTheme.colors.text}
                     name="chevron-right"
                     size={19} />
                 </TouchableOpacity>
@@ -241,7 +240,7 @@ const Settings = () => {
                 ]}>
                 <TouchableOpacity
                   onPress={() => {
-                    // handle onPress
+                    logout()
                   }}
                   style={styles.row}>
                   <Text style={[styles.rowLabel, styles.rowLabelLogout]}>
@@ -283,7 +282,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 19,
     fontWeight: '600',
-    color: '#000',
+    color: DarkTheme.colors.text,
     flexGrow: 1,
     flexShrink: 1,
     flexBasis: 0,
@@ -298,7 +297,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '500',
     textAlign: 'center',
-    color: '#a69f9f',
+    color: DarkTheme.colors.border,
   },
   /** Section */
   section: {
@@ -310,12 +309,12 @@ const styles = StyleSheet.create({
     fontSize: 13,
     letterSpacing: 0.33,
     fontWeight: '500',
-    color: '#a69f9f',
+    color: DarkTheme.colors.text,
     textTransform: 'uppercase',
   },
   sectionBody: {
     borderRadius: 12,
-    shadowColor: '#000',
+    shadowColor: DarkTheme.colors.background,
     shadowOffset: {
       width: 0,
       height: 1,
@@ -327,7 +326,7 @@ const styles = StyleSheet.create({
   /** Profile */
   profile: {
     padding: 12,
-    backgroundColor: '#fff',
+    backgroundColor: DarkTheme.colors.card,
     borderRadius: 12,
     flexDirection: 'row',
     alignItems: 'center',
@@ -345,13 +344,13 @@ const styles = StyleSheet.create({
   profileName: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#292929',
+    color: DarkTheme.colors.text,
   },
   profileHandle: {
     marginTop: 2,
     fontSize: 16,
     fontWeight: '400',
-    color: '#858585',
+    color: "gray",
   },
   /** Row */
   row: {
@@ -364,9 +363,9 @@ const styles = StyleSheet.create({
   },
   rowWrapper: {
     paddingLeft: 16,
-    backgroundColor: '#fff',
+    backgroundColor: DarkTheme.colors.card,
     borderTopWidth: 1,
-    borderColor: '#f0f0f0',
+    borderColor: DarkTheme.colors.border,
   },
   rowFirst: {
     borderTopLeftRadius: 12,
@@ -375,7 +374,7 @@ const styles = StyleSheet.create({
   rowLabel: {
     fontSize: 16,
     letterSpacing: 0.24,
-    color: '#000',
+    color: DarkTheme.colors.text,
   },
   rowSpacer: {
     flexGrow: 1,
@@ -384,9 +383,9 @@ const styles = StyleSheet.create({
   },
   rowValue: {
     fontSize: 16,
-    fontWeight: '500',
-    color: '#ababab',
-    marginRight: 4,
+    fontWeight: '400',
+    color: "gray",
+    marginRight: 20,
   },
   rowLast: {
     borderBottomLeftRadius: 12,
@@ -396,7 +395,8 @@ const styles = StyleSheet.create({
     width: '100%',
     textAlign: 'center',
     fontWeight: '600',
-    color: '#dc2626',
+    color: "#ff3b30",
+    textTransform: 'uppercase',
   },
 })
 

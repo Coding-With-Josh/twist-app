@@ -1,16 +1,16 @@
 import { Alert } from "react-native";
-import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "@firebase/auth";
 import { router } from "expo-router";
 
-const handleSignUp = ({ email, password }: { email: string; password: string }) => {
+const handleSignIn = ({ email, password }: { email: any; password: any }) => {
   const errorMessage = () => {
-    return Alert.alert("Unable to signup");
+    return Alert.alert("Unable to signin");
   };
   // const { email, password } = router.query;
 
   const auth = getAuth();
   auth;
-  createUserWithEmailAndPassword(auth, email, password)
+  signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       router.replace("/home");
       const user = userCredential.user;
@@ -22,4 +22,4 @@ const handleSignUp = ({ email, password }: { email: string; password: string }) 
     });
 };
 
-export default handleSignUp;
+export default handleSignIn
